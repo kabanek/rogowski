@@ -1,0 +1,9 @@
+<div id="post-full">
+    <h2><?php echo $this->post['title'] ?></h2>
+<?php if($this->loggedIn): ?>
+    <a href="<?php echo $this->url(array('action' => 'edit', 'controller' => 'post', 'id' => $this->post['id']), NULL, 'default') ?>">Edytuj</a>
+<?php endif ?>
+    <div class="author">Post dodał: <b><?php echo $this->post['name'] ?></b></div>
+    <div class="short"><?php echo $this->post['short'] ?></div>
+    <div class="content"><?php echo $this->post['content'] ?></div>
+</div>

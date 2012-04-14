@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>CSS3_one</title>
+<title>Blog</title>
 <meta name="description" content="website description">
 <meta name="keywords" content="website keywords, website keywords">
-<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" id="theme" href="/css/style.css">
 <!-- modernizr enables HTML5 elements and feature detects --><script type="text/javascript" src="/js/modernizr-1.5.min.js"></script>
 </head>
@@ -13,72 +13,33 @@
     <header><div id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="/">CSS3<span class="logo_colour">_one</span></a></h1>
-          <h2>Simple. Contemporary. Website Template.</h2>
+          <h1><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), NULL, 'default') ?>">Blog</a></h1>
+          <h2>Bardzo prosty blog</h2>
         </div>
         <form method="post" action="#" id="search">
-          <input class="search" type="text" name="search_field" value="search....." onclick="javascript: document.forms['search'].search_field.value=''"><input name="search" type="image" style="float: right;border: 0; margin: 20px 0 0 0;" src="/images/search.png" alt="search" title="search">
+          <input class="search" type="text" name="search_field" value="Szukaj....." onclick="javascript: document.forms['search'].search_field.value=''"><input name="search" type="image" style="float: right;border: 0; margin: 20px 0 0 0;" src="/images/search.png" alt="search" title="search">
 </form>
       </div>
-      <nav><ul class="sf-menu" id="nav">
-<li class="current"><a href="index.html">Home</a></li>
-          <li><a href="examples.html">Examples</a></li>
-          <li><a href="page.html">A Page</a></li>
-          <li><a href="another_page.html">Another Page</a></li>
-          <li>
-<a href="#">Example Drop Down</a>
-            <ul>
-<li><a href="#">Drop Down One</a></li>
-              <li>
-<a href="#">Drop Down Two</a>
-                <ul>
-<li><a href="#">Sub Drop Down One</a></li>
-                  <li><a href="#">Sub Drop Down Two</a></li>
-                  <li><a href="#">Sub Drop Down Three</a></li>
-                  <li><a href="#">Sub Drop Down Four</a></li>
-                  <li><a href="#">Sub Drop Down Five</a></li>
-                </ul>
-</li>
-              <li><a href="#">Drop Down Three</a></li>
-              <li><a href="#">Drop Down Four</a></li>
-              <li><a href="#">Drop Down Five</a></li>
-            </ul>
-</li>
-          <li><a href="contact.php">Contact Us</a></li>
+      <nav>
+        <ul class="sf-menu" id="nav">
+          <li class="current"><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), NULL, 'default') ?>">Strona główna</a></li>
+        <?php if (!$this->loggedIn): ?>
+          <li><a href="<?php echo $this->url(array('action' => 'login', 'controller' => 'user'), NULL, 'default') ?>">Logowanie</a></li>
+        <?php else: ?>
+          <li><a href="<?php echo $this->url(array('action' => 'new', 'controller' => 'post'), NULL, 'default') ?>">Dodaj posta</a></li>
+          <li><a href="<?php echo $this->url(array('action' => 'logout', 'controller' => 'user'), NULL, 'default') ?>">Wyloguj</a></li>
+        <?php endif ?>
         </ul></nav></header><div id="site_content">
       <div id="sidebar_container">
         <div class="sidebar">
-          <h3>Latest News</h3>
+          <h3>Ostatnie 5 wpisów</h3>
           <div class="sidebar_item">
-            <!-- insert your sidebar items here -->
-            <h4>New Website Launched</h4>
-            <h5>January 1st, 2012</h5>
-            <p>2012 sees the redesign of our website. Take a look around and let us know what you think.<br><a href="#">Read more</a></p>
+            <ul>
+            <?php foreach($this->new_posts as $post): ?>
+              <li><a href="<?php echo $this->url(array('action' => 'show', 'controller' => 'post', 'id' => $post['id']), NULL, 'default') ?>"><?php echo $post['title'] ?></a></li>
+            <?php endforeach ?>
+            </ul>
           </div>
-          <div class="sidebar_base"></div>
-        </div>
-        <div class="sidebar">
-          <h3>Useful Links</h3>
-          <div class="sidebar_item">
-            <ul>
-<li><a href="#">link 1</a></li>
-              <li><a href="#">link 2</a></li>
-              <li><a href="#">link 3</a></li>
-              <li><a href="#">link 4</a></li>
-            </ul>
-</div>
-          <div class="sidebar_base"></div>
-        </div>
-        <div class="sidebar">
-          <h3>More Useful Links</h3>
-          <div class="sidebar_item">
-            <ul>
-<li><a href="#">link 1</a></li>
-              <li><a href="#">link 2</a></li>
-              <li><a href="#">link 3</a></li>
-              <li><a href="#">link 4</a></li>
-            </ul>
-</div>
           <div class="sidebar_base"></div>
         </div>
       </div>

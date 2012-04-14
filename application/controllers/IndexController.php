@@ -1,14 +1,12 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+require_once 'BaseController.php';
+
+class IndexController extends BaseController
 {
-
-    public function init()
-    {
-    }
-
     public function indexAction()
     {
+        $this->view->posts = $this->_post->getAdapter()->query('SELECT * FROM post ORDER BY publish_time  DESC LIMIT 10')->fetchAll();
     }
 }
 

@@ -12,11 +12,8 @@ class Application_Model_User extends Zend_Db_Table {
     public function check($username, $password)
     {
         $password = md5($password);
+        $query = "SELECT * FROM user WHERE username LIKE '$username' AND password LIKE '$password'";
         
-        return $this->select()
-                ->where("username LIKE '$username'")
-                ->where("password LIKE '$password'")
-                ->query()
-                ->fetch();
+        return $this->getAdapter()->query($query)->fetch();
     }
 }

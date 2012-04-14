@@ -1,0 +1,22 @@
+<form method="post">
+    <table>
+        <tr>
+            <th>Tytuł posta</th>
+            <td><input type="text" name="title" value="<?php echo $this->post['title'] ?>" /></td>
+        </tr>
+
+        <tr>
+            <th>Krótki wstęp:</th>
+            <td><textarea name="short"><?php echo $this->post['short'] ?></textarea></td>
+        </tr>
+
+        <tr>
+            <th>Treść:</th>
+            <td><textarea name="content"><?php echo $this->post['content'] ?></textarea></td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit" value="Zapisz" /></td>
+        </tr>
+    </table>
+</form>
