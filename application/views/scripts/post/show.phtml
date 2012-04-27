@@ -25,28 +25,7 @@
         <p></p>
         <h4>Dodaj komentarz</h4>
         <div class="comments">
-            <form method="post" action="">
-                <table>
-                    <tr>
-                        <th>Autor</th>
-                        <td><input type="text" name="name" /></td>
-                    </tr>
-
-                    <tr>
-                        <th>Adres email (wymagane):</th>
-                        <td><input type="text" name="email" /></td>
-                    </tr>
-
-                    <tr>
-                        <th>Treść wiadomości (wymagane):</th>
-                        <td><textarea name="body"></textarea></td>
-                    </tr>
-
-                    <tr>
-                        <td><input type="submit" value="Dodaj komentarz" /></td>
-                    </tr>
-                </table>
-            </form>
+            <?php echo $this->form ?>
         </div>
     </div>
 
