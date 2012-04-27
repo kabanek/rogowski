@@ -5,5 +5,49 @@
 <?php endif ?>
     <div class="author">Post dodał: <b><?php echo $this->post['name'] ?></b></div>
     <div class="short"><?php echo $this->post['short'] ?></div>
-    <div class="content"><?php echo $this->post['content'] ?></div>
+    <div class="content">
+        <?php echo $this->post['content'] ?>
+
+        <p></p>
+        <p></p>
+
+        <div id="comments">
+            <?php foreach($this->comments as $comment): ?>
+                <div class="comment">
+                    <div class="title">Napisany przez: <?php if ($comment['name']): ?><b><?php echo $comment['name'] ?></b><?php else: ?><i>Nieznajomy</i><?php endif ?> dnia <?php echo $comment['date'] ?></div>
+
+                    <div class="body"><?php echo $comment['body'] ?></div>
+                </div>
+            <?php endforeach ?>
+        </div>
+
+        <p></p>
+        <p></p>
+        <h4>Dodaj komentarz</h4>
+        <div class="comments">
+            <form method="post" action="">
+                <table>
+                    <tr>
+                        <th>Autor</th>
+                        <td><input type="text" name="name" /></td>
+                    </tr>
+
+                    <tr>
+                        <th>Adres email (wymagane):</th>
+                        <td><input type="text" name="email" /></td>
+                    </tr>
+
+                    <tr>
+                        <th>Treść wiadomości (wymagane):</th>
+                        <td><textarea name="body"></textarea></td>
+                    </tr>
+
+                    <tr>
+                        <td><input type="submit" value="Dodaj komentarz" /></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
 </div>
