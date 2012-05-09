@@ -19,6 +19,15 @@ class Application_Form_Comment extends Zend_Form {
             'required'  => true
         ));
 
+        $recaptcha = new Zend_Service_ReCaptcha('6LcBQtESAAAAACkNaTmkXEPvCO-bggD7BnQ86XWO', '6LcBQtESAAAAAOGfvZ2RELqSP7dwMv1sCckIGQyO');
+
+        $captcha = new Zend_Form_Element_Captcha('recaptcha',
+            array('captcha'        => 'ReCaptcha',
+                'captchaOptions' => array('captcha' => 'ReCaptcha', 'service' => $recaptcha))
+        );
+
+        $this->addElement($captcha);
+
         $this->addElement('submit', 'submit', array(
             'label' => 'Dodaj',
         ));

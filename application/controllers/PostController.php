@@ -30,10 +30,11 @@ class PostController extends BaseController
         if (count($_POST)) { // dodaje komentarz
 
             if ($form->isValid($_POST)) {
-                unset($_POST['submit']);
+                unset($_POST['submit'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
                 $_POST['post_id'] = $post_id;
                 $_POST['date'] = date('Y-m-d H:i:s');
-                $this->_post->insert($_POST);
+                $comment = new Application_Model_Comment;
+                $comment->insert($_POST);
 
                 $this->_helper->redirector('index', 'index');
             }
