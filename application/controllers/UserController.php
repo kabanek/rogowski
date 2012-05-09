@@ -8,16 +8,18 @@ class UserController extends BaseController
     public function loginAction()
     {
         if (count($_POST)) {
-            $table = new Application_Model_User;
+            $user = new Application_Model_User;
+            $user->username = $_POST['username'];
+            $user->password = $_POST['password'];
 
-            $user = $table->check($_POST['username'], $_POST['password']);
+            $result = Zend_Auth::getInstance()->authenticate($user);
 
-            if (count($user)) { // czy znalazł takiego usera
-                $this->_session->userId = $user['id'];
+            if ($result->isValid()) {
+                $this->_session->userId = $result->getIdentity();
                 $this->_helper->redirector('index', 'index');
+            } else {
+                $this->_helper->redirector('login', 'user');
             }
-
-            $this->_helper->redirector('user', 'login');
         }
     }
 
