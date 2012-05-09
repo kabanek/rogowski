@@ -42,8 +42,16 @@ class PostController extends BaseController
             $this->_helper->redirector('show', 'post', 'default', array('id' => $post_id));
         }
 
-        $this->view->comments = $this->_post->getAdapter()->query("SELECT * FROM comment WHERE post_id = $post_id ORDER BY date DESC")->fetchAll();
-        $this->view->post = $this->_post->getAdapter()->query("SELECT * FROM post as p LEFT JOIN user as u ON u.id = p.author_id WHERE p.id = $post_id")->fetch();
+        $this->view->post = $this->_post->getAdapter()->select('u.*, p.*')
+            ->from('post as p')
+            ->joinLeft(array( 'u' => 'user'), 'author_id = u.id')->where('p.id = ?', $post_id)->query()->fetch();
+
+        if (!$this->view->post) { // nie znaleziono posta
+            $this->_helper->redirector('index', 'index');
+        }
+
+        $comment = new Application_Model_Comment;
+        $this->view->comments = $comment->select()->where('post_id = ?', $post_id)->order('date DESC')->query()->fetchAll();
 
         $this->view->form = $form;
     }
