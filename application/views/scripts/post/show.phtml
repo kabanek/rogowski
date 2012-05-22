@@ -3,10 +3,10 @@
 <?php if($this->loggedIn): ?>
     <a href="<?php echo $this->url(array('action' => 'edit', 'controller' => 'post', 'id' => $this->post['id']), NULL, 'default') ?>">Edytuj</a>
 <?php endif ?>
-    <div class="author">Post dodał: <b><?php echo $this->post['name'] ?></b></div>
-    <div class="short"><?php echo $this->post['short'] ?></div>
+    <div class="author">Post dodał: <b><?php echo $this->escape($this->post['name']) ?></b></div>
+    <div class="short"><?php echo $this->escape($this->post['short']) ?></div>
     <div class="content">
-        <?php echo $this->post['content'] ?>
+        <?php echo $this->escape($this->post['content']) ?>
 
         <p></p>
         <p></p>
@@ -14,9 +14,9 @@
         <div id="comments">
             <?php foreach($this->comments as $comment): ?>
                 <div class="comment">
-                    <div class="title">Napisany przez: <?php if ($comment['name']): ?><b><?php echo $comment['name'] ?></b><?php else: ?><i>Nieznajomy</i><?php endif ?> dnia <?php echo $comment['date'] ?></div>
+                    <div class="title">Napisany przez: <?php if ($comment['name']): ?><b><?php echo $this->escape($comment['name']) ?></b><?php else: ?><i>Nieznajomy</i><?php endif ?> dnia <?php echo $this->escape($comment['date']) ?></div>
 
-                    <div class="body"><?php echo $comment['body'] ?></div>
+                    <div class="body"><?php echo $this->escape($comment['body']) ?></div>
                 </div>
             <?php endforeach ?>
         </div>
