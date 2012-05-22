@@ -7,20 +7,26 @@ class UserController extends BaseController
 
     public function loginAction()
     {
+        $form = new Application_Form_Login;
+
         if (count($_POST)) {
-            $user = new Application_Model_User;
-            $user->username = $_POST['username'];
-            $user->password = $_POST['password'];
+            if ($form->isValid($_POST)) {
+                $user = new Application_Model_User;
+                $user->username = $_POST['username'];
+                $user->password = $_POST['password'];
 
-            $result = Zend_Auth::getInstance()->authenticate($user);
+                $result = Zend_Auth::getInstance()->authenticate($user);
 
-            if ($result->isValid()) {
-                $this->_session->userId = $result->getIdentity();
-                $this->_helper->redirector('index', 'index');
-            } else {
-                $this->_helper->redirector('login', 'user');
+                if ($result->isValid()) {
+                    $this->_session->userId = $result->getIdentity();
+                    $this->_helper->redirector('index', 'index');
+                } else {
+                    $this->_helper->redirector('login', 'user');
+                }
             }
         }
+
+        $this->view->form = $form;
     }
 
     public function logoutAction()
