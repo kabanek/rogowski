@@ -34,5 +34,27 @@ class UserController extends BaseController
         unset($this->_session->userId);
         $this->_helper->redirector('index', 'index');
     }
+
+    public function registerAction()
+    {
+        $form = new Application_Form_Register;
+
+        if (count($_POST)) {
+            if ($form->isValid($_POST)) {
+                $userData = array(
+                    'username'  => $_POST['username'],
+                    'name'      => $_POST['name'],
+                    'password'  => md5($_POST['password']),
+                    'email'     => $_POST['email'],
+                    'group_id'     => 1,   // czyli zwykły użytkownik
+                );
+
+                $this->_user->insert($userData);
+                $this->_helper->redirector('index', 'index');
+            }
+        }
+
+        $this->view->form = $form;
+    }
 }
 

@@ -25,6 +25,7 @@
           <li class="current"><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), NULL, 'default') ?>">Strona główna</a></li>
         <?php if (!$this->loggedIn): ?>
           <li><a href="<?php echo $this->url(array('action' => 'login', 'controller' => 'user'), NULL, 'default') ?>">Logowanie</a></li>
+          <li><a href="<?php echo $this->url(array('action' => 'register', 'controller' => 'user'), NULL, 'default') ?>">Rejestracja</a></li>
         <?php else: ?>
           <li><a href="<?php echo $this->url(array('action' => 'new', 'controller' => 'post'), NULL, 'default') ?>">Dodaj posta</a></li>
           <li><a href="<?php echo $this->url(array('action' => 'logout', 'controller' => 'user'), NULL, 'default') ?>">Wyloguj</a></li>
