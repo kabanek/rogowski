@@ -33,7 +33,10 @@ class BaseController extends Zend_Controller_Action
         $this->_user = new Application_Model_User;
 
         if (intval($this->_session->userId)) {
-            $this->_userData = $this->_user->find($this->_session->userId)->getRow(0)->toArray();
+            $this->_userData = $this->_user->getAdapter()->select('u.*, g.*')
+                ->from('user as u')
+                ->joinLeft(array( 'g' => 'group'), 'group_id = g.id')->where('u.id = ?', $this->_session->userId)->query()->fetch();
+            
             $this->_loggedIn = $this->view->loggedIn = true;
         } else {
             $this->_userData = array();

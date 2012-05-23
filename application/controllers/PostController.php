@@ -6,6 +6,14 @@ class PostController extends BaseController
 {
     function newAction()
     {
+        if (!$this->view->loggedIn) { // nie zalogowany
+            $this->_helper->redirector('index', 'index');
+        }
+
+        if (!$this->_userData['code'] == 'admin') { //posty dodawać może tylko admin
+            $this->_helper->redirector('index', 'index');
+        }
+
         $form = new Application_Form_Post;
 
         if (count($_POST)) {
@@ -58,6 +66,14 @@ class PostController extends BaseController
 
     function editAction()
     {
+        if (!$this->view->loggedIn) { // nie zalogowany
+            $this->_helper->redirector('index', 'index');
+        }
+
+        if (!$this->_userData['code'] == 'admin') { //posty edytować może tylko admin
+            $this->_helper->redirector('index', 'index');
+        }
+
         $post_id = $this->_getParam('id');
 
         $post = $this->_post->getAdapter()->query("SELECT * FROM post WHERE id = $post_id")->fetch();

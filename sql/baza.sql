@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5deb1
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 27 Kwi 2012, 20:55
--- Wersja serwera: 5.1.62
--- Wersja PHP: 5.3.6-13ubuntu3.6
+-- Czas wygenerowania: 23 May 2012, 20:11
+-- Wersja serwera: 5.5.22
+-- Wersja PHP: 5.3.10-1ubuntu3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `post_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `post_id` (`post_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Zrzut danych tabeli `comment`
@@ -44,7 +44,31 @@ CREATE TABLE IF NOT EXISTS `comment` (
 INSERT INTO `comment` (`id`, `email`, `name`, `body`, `date`, `post_id`) VALUES
 (1, 'dupa', '', 'lala', '2012-04-27 20:47:41', 1),
 (2, 'sfsdafas', '', 'fdsa dsa fsd', '2012-04-27 20:48:00', 1),
-(3, 'fas', 'fds', 'fasd', '2012-04-27 20:48:59', 1);
+(3, 'fas', 'fds', 'fasd', '2012-04-27 20:48:59', 1),
+(4, 'fsdfas', '', 'fdsafas', '2012-05-09 21:31:37', 1),
+(5, 'fdsafasd', '', 'fdsaf', '2012-05-09 21:32:13', 1),
+(6, 'fdsafdasfdsfdsaf', 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '2012-05-09 21:33:03', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla  `group`
+--
+
+CREATE TABLE IF NOT EXISTS `group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Zrzut danych tabeli `group`
+--
+
+INSERT INTO `group` (`id`, `name`, `code`) VALUES
+(1, 'Użytkownik', 'user'),
+(2, 'Administrator', 'admin');
 
 -- --------------------------------------------------------
 
@@ -82,16 +106,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(64) NOT NULL,
   `email` varchar(32) NOT NULL,
   `name` varchar(64) NOT NULL,
+  `group_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `email` (`email`),
+  KEY `group_id` (`group_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Zrzut danych tabeli `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`, `email`, `name`) VALUES
-(1, 'admin', '8b4f18be4790e513ae9c7fb83199c120', 'kontakt@bkielbasa.pl', 'administrator');
+INSERT INTO `user` (`id`, `username`, `password`, `email`, `name`, `group_id`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'kontakt@bkielbasa.pl', 'administrator', 2);
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -108,6 +134,12 @@ ALTER TABLE `comment`
 --
 ALTER TABLE `post`
   ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`);
+
+--
+-- Ograniczenia dla tabeli `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE SET NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
