@@ -22,5 +22,9 @@ class Application_Form_Post extends Zend_Form {
         $this->addElement('submit', 'submit', array(
             'label' => 'Dodaj',
         ));
+
+        $this->addElement('hash', 'csrf', array(
+            'ignore' => true,
+        ));
     }
 }

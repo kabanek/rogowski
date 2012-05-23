@@ -31,5 +31,9 @@ class Application_Form_Comment extends Zend_Form {
         $this->addElement('submit', 'submit', array(
             'label' => 'Dodaj',
         ));
+
+        $this->addElement('hash', 'csrf', array(
+            'ignore' => true,
+        ));
     }
 }
