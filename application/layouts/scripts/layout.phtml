@@ -16,19 +16,17 @@
           <h1><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), NULL, 'default') ?>">Blog</a></h1>
           <h2>Bardzo prosty blog</h2>
         </div>
-        <form method="post" action="#" id="search">
-          <input class="search" type="text" name="search_field" value="Szukaj....." onclick="javascript: document.forms['search'].search_field.value=''"><input name="search" type="image" style="float: right;border: 0; margin: 20px 0 0 0;" src="/images/search.png" alt="search" title="search">
-</form>
       </div>
       <nav>
         <ul class="sf-menu" id="nav">
           <li class="current"><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), NULL, 'default') ?>">Strona główna</a></li>
+          <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'forum'), NULL, 'default') ?>">Forum</a></li>
         <?php if (!$this->loggedIn): ?>
           <li><a href="<?php echo $this->url(array('action' => 'login', 'controller' => 'user'), NULL, 'default') ?>">Logowanie</a></li>
           <li><a href="<?php echo $this->url(array('action' => 'register', 'controller' => 'user'), NULL, 'default') ?>">Rejestracja</a></li>
         <?php else: ?>
           <li><a href="<?php echo $this->url(array('action' => 'new', 'controller' => 'post'), NULL, 'default') ?>">Dodaj posta</a></li>
-          <li><a href="<?php echo $this->url(array('action' => 'logout', 'controller' => 'user'), NULL, 'default') ?>">Wyloguj</a></li>
+          <li><a href="<?php echo $this->url(array('action' => 'logout', 'controller' => 'user'), NULL, 'default') ?>">Wyloguj (<?php echo $this->userData['name'] ?>)</a></li>
         <?php endif ?>
         </ul></nav></header><div id="site_content">
       <div id="sidebar_container">

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 23 May 2012, 20:11
+-- Czas wygenerowania: 25 May 2012, 00:29
 -- Wersja serwera: 5.5.22
 -- Wersja PHP: 5.3.10-1ubuntu3.1
 
@@ -48,6 +48,83 @@ INSERT INTO `comment` (`id`, `email`, `name`, `body`, `date`, `post_id`) VALUES
 (4, 'fsdfas', '', 'fdsafas', '2012-05-09 21:31:37', 1),
 (5, 'fdsafasd', '', 'fdsaf', '2012-05-09 21:32:13', 1),
 (6, 'fdsafdasfdsfdsaf', 'eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '2012-05-09 21:33:03', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla  `forum_category`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `order` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Zrzut danych tabeli `forum_category`
+--
+
+INSERT INTO `forum_category` (`id`, `name`, `order`) VALUES
+(1, 'Sport', 0),
+(2, 'Muzyka', 1),
+(3, 'Turystyka', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla  `forum_post`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author_id` int(11) NOT NULL,
+  `topic_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `author_id` (`author_id`,`topic_id`),
+  KEY `topic_id` (`topic_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Zrzut danych tabeli `forum_post`
+--
+
+INSERT INTO `forum_post` (`id`, `author_id`, `topic_id`, `content`, `created_at`) VALUES
+(1, 2, 1, 'Ja słucham Hip Hopu!', '2012-05-24 23:17:58'),
+(2, 3, 1, 'A ja słucham rocka :P Rock jest spoko! Mówię wam :D', '2012-05-24 23:18:28'),
+(3, 1, 1, 'Tak, rock też ma swoje uroki :P ale mimo wszystko DODA rządzi! KOCHAM JĄ!!!!!', '2012-05-25 00:26:17'),
+(4, 1, 1, 'fsafd', '2012-05-25 00:28:36');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla  `forum_topic`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_topic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `author_id` (`author_id`),
+  KEY `category_id` (`category_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Zrzut danych tabeli `forum_topic`
+--
+
+INSERT INTO `forum_topic` (`id`, `author_id`, `title`, `content`, `created_at`, `category_id`) VALUES
+(1, 1, 'Jaką muzykę słuchacie?', 'Jaką muzykę słuchacie? Bo ja kocham się w muzyce klasycznej :)', '2012-05-24 00:00:00', 2),
+(2, 2, 'Gdzie polecacie wybrać się na wakacje?', 'Chcę pojechać gdzieś na wakacje, ale nie mam pojęcia gdzie... Macie jakieś propozycje?', '2012-05-24 23:42:33', 3),
+(3, 2, 'Jakie sporty uprawiacie?', 'Jakie sporty uprawiacie? Ja lubię tenis oraz szachy :)', '2012-05-24 23:42:33', 1),
+(4, 2, 'Koncert Muzyki klasycznej', 'Wiecie może gdzie jest jakiś koncert muzyki klasycznej?', '2012-05-24 23:42:33', 2);
 
 -- --------------------------------------------------------
 
@@ -110,14 +187,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `group_id` (`group_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Zrzut danych tabeli `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `name`, `group_id`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'kontakt@bkielbasa.pl', 'administrator', 2);
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'kontakt@bkielbasa.pl', 'Administrator', 2),
+(2, 'johny_brawo', '21232f297a57a5a743894a0e4a801fc3', 'brawo@johny.com', 'Dżony Brawo', 1),
+(3, 'tom_cruse', '21232f297a57a5a743894a0e4a801fc3', 'tom@cruse.pl', 'Tom Krus', 1);
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -128,6 +207,20 @@ INSERT INTO `user` (`id`, `username`, `password`, `email`, `name`, `group_id`) V
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
+
+--
+-- Ograniczenia dla tabeli `forum_post`
+--
+ALTER TABLE `forum_post`
+  ADD CONSTRAINT `forum_post_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `forum_post_ibfk_2` FOREIGN KEY (`topic_id`) REFERENCES `forum_topic` (`id`) ON DELETE CASCADE;
+
+--
+-- Ograniczenia dla tabeli `forum_topic`
+--
+ALTER TABLE `forum_topic`
+  ADD CONSTRAINT `forum_topic_ibfk_3` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `forum_topic_ibfk_4` FOREIGN KEY (`category_id`) REFERENCES `forum_category` (`id`);
 
 --
 -- Ograniczenia dla tabeli `post`

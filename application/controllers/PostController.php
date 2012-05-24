@@ -19,7 +19,7 @@ class PostController extends BaseController
         if (count($_POST)) {
             if ($form->isValid($_POST)) {
                 unset($_POST['submit']);
-                $_POST['author_id'] = $this->_userData['id'];
+                $_POST['author_id'] = $this->_userData['user_id'];
                 $this->_post->insert($_POST);
 
                 $this->_helper->redirector('index', 'index');

@@ -532,3 +532,18 @@ ul ul span.sf-arrow {
   right: 12px;
   top: 15px;
 }
+
+table.forum-category {
+    width: 100%;
+}
+table.forum-category .title {
+    width: 50%;
+}
+table.forum-category .author {
+    width: 20%;
+}
+
+#content {
+    width: 99%;
+    height: 200px;
+}
