@@ -23,6 +23,23 @@
 
         <p></p>
         <p></p>
+    <?php if (count($this->attachments)): ?>
+        <?php if ($this->loggedIn): ?>
+        <h4>Załączniki</h4>
+        <div class="attachments">
+            <ul>
+            <?php foreach ($this->attachments as $attachment): ?>
+                <a href="/attachments/?file=<?php echo base64_encode($attachment['path']) ?>"><?php echo $this->escape($attachment['filename']) ?></a>
+            <?php endforeach ?>
+            </ul>
+        </div>
+        <?php else: ?>
+            <span style="color: red">Musisz być zalogowanym, aby zobaczyć załącznik</span>
+        <?php endif ?>
+    <?php endif ?>
+
+        <p></p>
+        <p></p>
         <h4>Dodaj komentarz</h4>
         <div class="comments">
             <?php echo $this->form ?>

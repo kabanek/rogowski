@@ -61,7 +61,11 @@ class PostController extends BaseController
         $comment = new Application_Model_Comment;
         $this->view->comments = $comment->select()->where('post_id = ?', $post_id)->order('date DESC')->query()->fetchAll();
 
+        $comment = new Application_Model_Post_Attachment;
+        $this->view->attachments = $comment->select()->where('post_id = ?', $post_id)->query()->fetchAll();
+
         $this->view->form = $form;
+
     }
 
     function editAction()
