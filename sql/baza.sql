@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 25 May 2012, 00:29
+-- Czas wygenerowania: 27 May 2012, 17:28
 -- Wersja serwera: 5.5.22
 -- Wersja PHP: 5.3.10-1ubuntu3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Baza danych: `zend`
@@ -174,6 +168,28 @@ INSERT INTO `post` (`id`, `title`, `short`, `content`, `author_id`, `publish_tim
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla  `post_attachment`
+--
+
+CREATE TABLE IF NOT EXISTS `post_attachment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(255) NOT NULL,
+  `path` varchar(255) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `post_id` (`post_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Zrzut danych tabeli `post_attachment`
+--
+
+INSERT INTO `post_attachment` (`id`, `filename`, `path`, `post_id`) VALUES
+(1, 'OWASP Top 10 - 2010.pdf', 'OWASP.pdf', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla  `user`
 --
 
@@ -229,11 +245,13 @@ ALTER TABLE `post`
   ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`);
 
 --
+-- Ograniczenia dla tabeli `post_attachment`
+--
+ALTER TABLE `post_attachment`
+  ADD CONSTRAINT `post_attachment_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
+
+--
 -- Ograniczenia dla tabeli `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE SET NULL;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
